@@ -23,16 +23,13 @@ jobs:
     - name: Setup Ruby
       uses: ruby/setup-ruby@v1
       with:
-        ruby-version: '3.1.4'  # Specify an exact supported version
+        ruby-version: '3.1.4'  # Specify the Ruby version
 
-    - name: Install Bundler
-      run: gem install bundler  # Install bundler if needed, but no bundle install
+    - name: Set ENV_VAR1 and ENV_VAR2
+      run: |
+        echo "ENV_VAR1=${{ github.event.inputs.input1 }}" >> $GITHUB_ENV
+        echo "ENV_VAR2=${{ github.event.inputs.input2 }}" >> $GITHUB_ENV
 
     - name: Run Ruby script
       run: |
         ruby CICDScripts/script.rb
-      env:
-        ENV_VAR1: ${{ github.event.inputs.input1 }}
-        ENV_VAR2: ${{ github.event.inputs.input2 }}
-        CUSTOM_ENV_VAR1: ${{ secrets.CUSTOM_ENV_VAR1 }}
-        CUSTOM_ENV_VAR2: 'another_value'
