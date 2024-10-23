@@ -23,7 +23,7 @@ jobs:
     - name: Setup Ruby
       uses: ruby/setup-ruby@v1
       with:
-        ruby-version: '3.x'
+        ruby-version: '3.1.4'  # Specify an exact supported version
 
     - name: Install dependencies
       run: |
