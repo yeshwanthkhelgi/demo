@@ -16,6 +16,11 @@ jobs:
     - name: Checkout code
       uses: actions/checkout@v4
 
+    - name: Push remote url to github
+      run: |
+        url="git@github.com:yeshwanthkhelgi/demo"
+        git remote set-url --push origin "$url"
+        
     - name: Set branch name
       id: branch-name
       run: echo "release_branch_name=${{ github.event.inputs.branch_name }}" >> $GITHUB_ENV
