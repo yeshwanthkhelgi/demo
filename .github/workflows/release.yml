@@ -1,35 +1,34 @@
-name: Release Plan
+name: Push to Release Branch
 
 on:
   workflow_dispatch:
     inputs:
       branch_name:
-        description: 'Name of the release branch'
+        description: "Name of the branch to create and push"
         required: true
-        default: 'feature2'
+        default: "feature2"
 
 jobs:
-  run-ruby-script:
+  push-branch:
     runs-on: ubuntu-latest
 
     steps:
     - name: Checkout code
       uses: actions/checkout@v4
 
-    - name: Push remote url to github
-      run: |
-        url="git@github.com:yeshwanthkhelgi/demo"
-        git remote set-url --push origin "$url"
-        
     - name: Set branch name
-      id: branch-name
-      run: echo "release_branch_name=${{ github.event.inputs.branch_name }}" >> $GITHUB_ENV
-
-    - name: Create release branch
+      id: set-branch-name
       run: |
-        git checkout -b ${{ env.release_branch_name }}
-        echo "Created branch ${{ env.release_branch_name }}"
+        echo "RELEASE_BRANCH=${{ github.event.inputs.branch_name }}" >> $GITHUB_ENV
 
-    - name: Push to release branch
+    - name: Configure Git
       run: |
-        git push --set-upstream origin ${{ env.release_branch_name }}
+        git config --global user.name "GitHub Actions"
+        git config --global user.email "actions@github.com"
+
+    - name: Create and Push Release Branch
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      run: |
+        git checkout -b ${{ env.RELEASE_BRANCH }}
+        git push --set-upstream https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/yeshwanthkhelgi/demo.git ${{ env.RELEASE_BRANCH }}
