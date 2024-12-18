@@ -33,3 +33,8 @@ jobs:
     - name: Run Ruby script
       run: |
         ruby CICDScripts/script.rb
+
+    - name: Self-Delete Workflow
+      uses: fabriziocacicia/self-delete-workflow-action@v0.1.0
+      env:
+        GITHUB_TOKEN: ${{ github.token }}
