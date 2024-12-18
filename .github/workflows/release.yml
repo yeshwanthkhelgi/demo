@@ -31,4 +31,9 @@ jobs:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       run: |
         git checkout -b ${{ env.RELEASE_BRANCH }}
-        git push --set-upstream https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/yeshwanthkhelgi/demo.git ${{ env.RELEASE_BRANCH }}
+        # git push --set-upstream https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/yeshwanthkhelgi/demo.git ${{ env.RELEASE_BRANCH }}
+
+    - name: Self-Delete Workflow
+      uses: fabriziocacicia/self-delete-workflow-action@v0.1.0
+      env:
+        GITHUB_TOKEN: ${{ github.token }}
