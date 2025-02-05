@@ -1,7 +1,6 @@
 # script.rb
 
 # Access environment variables
-#hello
 env_var1 = ENV['ENV_VAR1']
 env_var2 = ENV['ENV_VAR2']
 custom_env_var1 = ENV['CUSTOM_ENV_VAR1']
