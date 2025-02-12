@@ -8,8 +8,8 @@ on:
         required: true
         default: "feature2"
         
-  schedule:
-    - cron: "*/5 * * * *"  # Runs every 5 minutes
+  # schedule:
+  #   - cron: "*/5 * * * *"  # Runs every 5 minutes
 
 env:
   RELEASE_BRANCH: ${{ github.event.inputs.branch_name || 'feature2' }}
