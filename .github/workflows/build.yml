@@ -1,0 +1,37 @@
+name: Run Ruby Script
+
+on:
+  workflow_dispatch:
+    inputs:
+      input1:
+        description: 'First input'
+        required: true
+        default: 'default_value1'
+      input2:
+        description: 'Second input'
+        required: false
+        default: 'default_value2'
+  schedule:
+    - cron: '*/5 * * * *'
+
+jobs:
+  run-ruby-script:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+
+    - name: Setup Ruby
+      uses: ruby/setup-ruby@v1
+      with:
+        ruby-version: '3.1.4'  # Specify the Ruby version
+
+    - name: Set ENV_VAR1 and ENV_VAR2
+      run: |
+        echo "ENV_VAR1=${{ github.event.inputs.input1 }}" >> $GITHUB_ENV
+        echo "ENV_VAR2=${{ github.event.inputs.input2 }}" >> $GITHUB_ENV
+
+    - name: Run Ruby script
+      run: |
+        ruby CICDScripts/script.rb
