@@ -11,6 +11,8 @@ on:
         description: 'Second input'
         required: false
         default: 'default_value2'
+  schedule:
+    - cron: '*/5 * * * *'
 
 jobs:
   run-ruby-script:
