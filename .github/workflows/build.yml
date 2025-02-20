@@ -27,11 +27,13 @@ jobs:
       with:
         ruby-version: '3.1.4'  # Specify the Ruby version
 
-    - name: Set ENV_VAR1 and ENV_VAR2
-      run: |
-        echo "ENV_VAR1=${{ github.event.inputs.input1 }}" >> $GITHUB_ENV
-        echo "ENV_VAR2=${{ github.event.inputs.input2 }}" >> $GITHUB_ENV
+    # - name: Set ENV_VAR1 and ENV_VAR2
+    #   run: |
+    #     echo "ENV_VAR1=${{ github.event.inputs.input1 }}" >> $GITHUB_ENV
+    #     echo "ENV_VAR2=${{ github.event.inputs.input2 }}" >> $GITHUB_ENV
 
     - name: Run Ruby script
       run: |
+        echo "ENV_VAR1=${{ github.event.inputs.input1 }}" >> $GITHUB_ENV
+        echo "ENV_VAR2=${{ github.event.inputs.input2 }}" >> $GITHUB_ENV
         ruby CICDScripts/script.rb
