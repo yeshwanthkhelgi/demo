@@ -15,7 +15,7 @@ puts "CUSTOM_ENV_VAR2: #{custom_env_var2}"
 #hello
 def release_lead_check
   code_owner_content = File.read(".github/CODEOWNERS")
-  code_owner_content = code_owner_content.match(/^\* (.*)$/)
+  code_owner_match = code_owner_content.match(/^\* (.*)$/)
   if code_owner_match
     release_leads = code_owner_match[1].gsub('@',' ').split(' ')
     if release_leads.empty?
