@@ -38,3 +38,7 @@ jobs:
         echo "ENV_VAR2=${{ github.event.inputs.input2 }}" >> $GITHUB_ENV
         ruby CICDScripts/script.rb
         echo "The link is ${{ env.link }}"
+
+    - name: Access the link environment variable
+      run: echo "The link is ${{ env.link }}"
+
