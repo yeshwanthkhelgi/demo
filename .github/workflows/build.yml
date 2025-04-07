@@ -27,16 +27,18 @@ jobs:
       with:
         ruby-version: '3.1.4'  # Specify the Ruby version
 
-    # - name: Set ENV_VAR1 and ENV_VAR2
-    #   run: |
-    #     echo "ENV_VAR1=${{ github.event.inputs.input1 }}" >> $GITHUB_ENV
-    #     echo "ENV_VAR2=${{ github.event.inputs.input2 }}" >> $GITHUB_ENV
-
     - name: Run Ruby script
       id: script_link
       run: |
-        ruby CICDScripts/script.rb
-        echo "slink=${{ env.link }}" >> $GITHUB_OUTPUT
+        if [ "${{ env.input1 }}" == "default_value1" ]; then
+          echo "if part"
+          ruby CICDScripts/script.rb
+          LINK=$(cat link.txt)
+          echo "slink=${{ env.LINK }}" >> $GITHUB_OUTPUT
+        else
+          echo "else part"
+          echo "slink=idk" >> $GITHUB_OUTPUT
+        fi
 
     - name: Access the link environment variable
       env:
