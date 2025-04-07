@@ -11,8 +11,8 @@ on:
         description: 'Second input'
         required: false
         default: 'default_value2'
-  schedule:
-    - cron: '*/6 * * * *'
+  # schedule:
+  #   - cron: '*/6 * * * *'
 
 jobs:
   run-ruby-script:
@@ -37,3 +37,4 @@ jobs:
         echo "ENV_VAR1=${{ github.event.inputs.input1 }}" >> $GITHUB_ENV
         echo "ENV_VAR2=${{ github.event.inputs.input2 }}" >> $GITHUB_ENV
         ruby CICDScripts/script.rb
+        echo "The link is ${{ env.link }}"
