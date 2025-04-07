@@ -33,12 +33,13 @@ jobs:
     #     echo "ENV_VAR2=${{ github.event.inputs.input2 }}" >> $GITHUB_ENV
 
     - name: Run Ruby script
+      id: script_link
       run: |
-        echo "ENV_VAR1=${{ github.event.inputs.input1 }}" >> $GITHUB_ENV
-        echo "ENV_VAR2=${{ github.event.inputs.input2 }}" >> $GITHUB_ENV
         ruby CICDScripts/script.rb
-        echo "The link is ${{ env.link }}"
+        echo "slink=${{ env.link }}" >> $GITHUB_OUTPUT
 
     - name: Access the link environment variable
-      run: echo "The link is ${{ env.link }}"
+      env:
+        special: ${{ steps.script_link.outputs.slink}}
+      run: echo "The link is correct"
 
