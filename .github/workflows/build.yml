@@ -25,18 +25,25 @@ jobs:
       with:
         ruby-version: '3.1.4'
 
-    - name: Run Ruby script
-      id: script_link
+    - name: Run Ruby script conditionally
       run: |
         if [ "${{ github.event.inputs.input1 }}" == "default_value1" ]; then
-          echo "if part"
+          echo "Running Ruby script to set real links"
           ruby CICDScripts/script.rb
-          LINK=$(cat link.txt)
-          echo "slink=$LINK" >> $GITHUB_OUTPUT
         else
-          echo "else part"
-          echo "slink=idk" >> $GITHUB_OUTPUT
+          echo "Setting dummy links"
+          echo "group1_PUBLIC_LINK=idk" >> $GITHUB_ENV
+          echo "group2_PUBLIC_LINK=idk" >> $GITHUB_ENV
+          echo "beta_PUBLIC_LINK=idk" >> $GITHUB_ENV
         fi
+        echo "---- Verifying ------"
+        echo "group1_PUBLIC_LINK=$group1_PUBLIC_LINK"
+        echo "group2_PUBLIC_LINK=$group2_PUBLIC_LINK"
+        echo "beta_PUBLIC_LINK=$beta_PUBLIC_LINK"
 
-    - name: Access the link environment variable
-      run: echo "The link is ${{ steps.script_link.outputs.slink }}"
+    - name: Print Environment Variables
+      run: |
+        echo "---- Verifying Environment Variables ----"
+        echo "group1_PUBLIC_LINK=$group1_PUBLIC_LINK"
+        echo "group2_PUBLIC_LINK=$group2_PUBLIC_LINK"
+        echo "beta_PUBLIC_LINK=$beta_PUBLIC_LINK"
