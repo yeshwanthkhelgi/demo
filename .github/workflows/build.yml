@@ -11,8 +11,6 @@ on:
         description: 'Second input'
         required: false
         default: 'default_value2'
-  # schedule:
-  #   - cron: '*/6 * * * *'
 
 jobs:
   run-ruby-script:
@@ -25,23 +23,20 @@ jobs:
     - name: Setup Ruby
       uses: ruby/setup-ruby@v1
       with:
-        ruby-version: '3.1.4'  # Specify the Ruby version
+        ruby-version: '3.1.4'
 
     - name: Run Ruby script
       id: script_link
       run: |
-        if [ "${{ env.input1 }}" == "default_value1" ]; then
+        if [ "${{ github.event.inputs.input1 }}" == "default_value1" ]; then
           echo "if part"
           ruby CICDScripts/script.rb
           LINK=$(cat link.txt)
-          echo "slink=${{ env.LINK }}" >> $GITHUB_OUTPUT
+          echo "slink=$LINK" >> $GITHUB_OUTPUT
         else
           echo "else part"
           echo "slink=idk" >> $GITHUB_OUTPUT
         fi
 
     - name: Access the link environment variable
-      env:
-        special: ${{ steps.script_link.outputs.slink}}
-      run: echo "The link is correct"
-
+      run: echo "The link is ${{ steps.script_link.outputs.slink }}"
